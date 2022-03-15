@@ -1,11 +1,16 @@
 package com.alaa.currencyconverter
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.alaa.currencyconverter.core.base.BaseActivity
+import com.alaa.currencyconverter.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        installSplashScreen()
     }
+
+    override fun getLayoutResourceId(): Int = R.layout.activity_main
 }
