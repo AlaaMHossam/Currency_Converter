@@ -8,6 +8,6 @@
     <fragment
         tools:layout="@layout/fragment_currency_conversion"
         android:id="@+id/currencyConversionFragment"
-        android:name="com.alaa.currencyconverter.ui.fragments.CurrencyConversionFragment"
+        android:name="com.alaa.currencyconverter.currency_conversion.ui.CurrencyConversionFragment"
         android:label="CurrencyConversionFragment" />
 </navigation>

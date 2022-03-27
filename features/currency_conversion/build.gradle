@@ -14,10 +14,8 @@ android {
         minSdk 23
         targetSdk 31
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.alaa.currencyconverter.currency_conversion.ui.HiltTestRunner"
         consumerProguardFiles "consumer-rules.pro"
-        resValue "string", "API_URL", '"http://data.fixer.io/api/"'
-        resValue "string", "API_KEY", "72a7a518b325fb60f3eb7d12ebccb1fc"
     }
 
     buildTypes {
@@ -26,7 +24,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
@@ -40,11 +37,25 @@ android {
         viewBinding true
         dataBinding true
     }
+
+    testOptions {
+        animationsDisabled true
+        unitTests {
+            returnDefaultValues = true
+            includeAndroidResources = true
+        }
+        packagingOptions {
+            jniLibs {
+                useLegacyPackaging true
+            }
+        }
+    }
 }
 
 dependencies {
 
     // Modules Dependencies
+    implementation project(':core')
     implementation project(':common_ui')
 
     // Base Generated Dependencies
@@ -52,6 +63,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appCompat_version"
     implementation "com.google.android.material:material:$material_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$ext_junit_version"
@@ -61,9 +73,6 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
-
-    // OKHTTP
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_logging_interceptor"
 
     // HILT
     implementation "com.google.dagger:hilt-android:$hilt_version"
@@ -77,6 +86,8 @@ dependencies {
     // For local unit tests
     testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     kaptTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    testImplementation 'org.json:json:20180813'
 
     /** Fragment Testing */
     debugImplementation("androidx.fragment:fragment-testing:$fragment_testing_version")
