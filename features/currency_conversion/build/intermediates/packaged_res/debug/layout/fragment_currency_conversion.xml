@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+                                                       
+                                                        
+                                                   
+
+    
+
+                 
+                            
+                                                                                                  
+
+                 
+                                      
+                                                                                           
+
+
+                 
+                           
+                                                                                                  
+                                           
+
+               
+                             
+                                                                      
+           
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        tools:context=".currency_conversion.ui.CurrencyConversionFragment" android:tag="layout/fragment_currency_conversion_0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:bind="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_main_hor_30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_main_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:tag="binding_1"                                                                        
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gl_main_hor_30">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_from_currency"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:endIconMode="dropdown_menu"
+                app:layout_constraintEnd_toStartOf="@+id/iv_to_currency"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/actv_from_currency"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/from_currency"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/iv_to_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:contentDescription="@null"
+                android:tag="binding_2"                               
+                app:layout_constraintBottom_toBottomOf="@+id/til_to_currency"
+                app:layout_constraintEnd_toStartOf="@+id/til_to_currency"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/til_from_currency"
+                app:layout_constraintTop_toTopOf="@+id/til_to_currency"
+                app:srcCompat="@drawable/ic_baseline_code_24" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_to_currency"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:endIconMode="dropdown_menu"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/iv_to_currency"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/actv_to_currency"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/to_currency"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <include
+                android:id="@+id/included_amounts"
+                layout="@layout/layout_main_amounts"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_to_currency"
+                                                                  />
+
+            <Button
+                android:id="@+id/btn_main_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/details"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/included_amounts" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/pb_main"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:tag="binding_3"                                                                   
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gl_main_hor_30" />
+
+        <Button
+            android:id="@+id/btn_currency_conversion_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:tag="binding_4"                         
+            android:text="@string/retry"
+                                                                                                         
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pb_main" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+         
