@@ -33,6 +33,8 @@ class CurrencyConverterViewModel
     }
 
     fun fetchData() = viewModelScope.launch {
+        _viewState.value = LOADING
+
         val currencyData = getCurrencyDataCase()
         _currencyData.emit(currencyData)
 

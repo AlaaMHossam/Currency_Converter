@@ -19,12 +19,12 @@ constructor(private val client: CurrencyConverterClient) : CurrencyConverterRepo
         try {
             val symbolsResponse = client.fetchSymbols().toDomainModel()
             val ratesResponse = client.fetchRates().toDomainModel()
-            val currencyData =
-                CurrencyData(ratesResponse.success,
-                    symbolsResponse.symbolsList,
-                    symbolsResponse.currenciesList,
-                    ratesResponse.ratesList
-                )
+            val currencyData = CurrencyData(
+                ratesResponse.success,
+                symbolsResponse.symbolsList,
+                symbolsResponse.currenciesList,
+                ratesResponse.ratesList
+            )
             DataState.Success(currencyData)
         } catch (exception: Exception) {
             DataState.Error(exception)

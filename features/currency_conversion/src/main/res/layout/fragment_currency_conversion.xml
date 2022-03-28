@@ -14,6 +14,10 @@
             name="conversionViewModel"
             type="com.alaa.currencyconverter.currency_conversion.ui.ConversionViewModel" />
 
+
+        <variable
+            name="fragment"
+            type="com.alaa.currencyconverter.currency_conversion.ui.CurrencyConversionFragment" />
         <import type="android.view.View" />
 
         <import
@@ -64,19 +68,20 @@
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/iv_to_currency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:contentDescription="@null"
+                android:onClick="@{() -> fragment.invertCurrencies()}"
                 app:layout_constraintBottom_toBottomOf="@+id/til_to_currency"
                 app:layout_constraintEnd_toStartOf="@+id/til_to_currency"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/til_from_currency"
                 app:layout_constraintTop_toTopOf="@+id/til_to_currency"
-                app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
+                app:srcCompat="@drawable/ic_baseline_code_24" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_to_currency"

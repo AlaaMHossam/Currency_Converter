@@ -12,7 +12,7 @@ class ConversionViewModel : ViewModel() {
     var currencyData: CurrencyData? = null
 
     val fromAmount = MutableStateFlow("1")
-    val toAmount = MutableStateFlow("")
+    val toAmount = MutableStateFlow("0.0")
 
     private val fromRate = MutableStateFlow(0.0)
     private val toRate = MutableStateFlow(0.0)

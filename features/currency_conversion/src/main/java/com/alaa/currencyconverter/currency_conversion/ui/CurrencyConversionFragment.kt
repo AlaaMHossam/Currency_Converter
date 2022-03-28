@@ -1,5 +1,7 @@
 package com.alaa.currencyconverter.currency_conversion.ui
 
+import android.R.layout.simple_list_item_1
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
@@ -23,23 +25,26 @@ class CurrencyConversionFragment : BaseFragment<FragmentCurrencyConversionBindin
 
     private lateinit var binding: FragmentCurrencyConversionBinding
 
+    private lateinit var currenciesAdapter: ArrayAdapter<String>
+
     override fun getLayoutResourceId(): Int = R.layout.fragment_currency_conversion
 
     override fun onBindData(binding: FragmentCurrencyConversionBinding) {
         super.onBindData(binding)
         binding.viewModel = viewModel
         binding.conversionViewModel = conversionViewModel
+        binding.fragment = this
         this.binding = binding
     }
 
     override fun initView() {
         super.initView()
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.currencyData.collectLatest { updateUI(it)}
+            viewModel.currencyData.collectLatest { updateUI(it) }
         }
     }
 
-    private fun updateUI(dataState: DataState<CurrencyData>) {
+    fun updateUI(dataState: DataState<CurrencyData>) {
         if (dataState is Success) updateSuccessUI(dataState.data)
         else updateErrorUI(dataState.exception)
     }
@@ -55,8 +60,7 @@ class CurrencyConversionFragment : BaseFragment<FragmentCurrencyConversionBindin
     }
 
     private fun setupCurrenciesAdapter(currenciesList: List<String>) {
-        val currenciesAdapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, currenciesList)
+        currenciesAdapter = ArrayAdapter(requireContext(), simple_list_item_1, currenciesList)
         binding.actvFromCurrency.setAdapter(currenciesAdapter)
         binding.actvToCurrency.setAdapter(currenciesAdapter)
     }
@@ -70,5 +74,18 @@ class CurrencyConversionFragment : BaseFragment<FragmentCurrencyConversionBindin
             conversionViewModel.setToRate(currenciesList[i])
             conversionViewModel.calculateCurrency()
         }
+    }
+
+    fun invertCurrencies() {
+        val fromCurrencyText = binding.actvFromCurrency.text
+        val toCurrencyText = binding.actvToCurrency.text
+
+        binding.actvFromCurrency.setText(toCurrencyText, false)
+        binding.actvToCurrency.setText(fromCurrencyText, false)
+
+        conversionViewModel.setFromRate(toCurrencyText.toString())
+        conversionViewModel.setToRate(fromCurrencyText.toString())
+
+        conversionViewModel.calculateCurrency()
     }
 }

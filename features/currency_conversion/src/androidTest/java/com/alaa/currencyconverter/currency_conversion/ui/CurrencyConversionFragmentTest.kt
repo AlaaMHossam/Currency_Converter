@@ -1,26 +1,43 @@
 package com.alaa.currencyconverter.currency_conversion.ui
 
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.RootMatchers.isPlatformPopup
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.alaa.currencyconverter.core.launchFragmentInHiltContainer
+import com.alaa.currencyconverter.core.states.DataState
+import com.alaa.currencyconverter.core.states.ViewState
+import com.alaa.currencyconverter.currency_conversion.R
+import com.alaa.currencyconverter.currency_conversion.data.model.rates.RatesDTO
+import com.alaa.currencyconverter.currency_conversion.data.model.rates.toDomainModel
+import com.alaa.currencyconverter.currency_conversion.data.model.symbols.SymbolsDTO
+import com.alaa.currencyconverter.currency_conversion.data.model.symbols.toDomainModel
+import com.alaa.currencyconverter.currency_conversion.domain.model.CurrencyData
+import com.alaa.currencyconverter.currency_conversion.domain.model.Rates
+import com.alaa.currencyconverter.currency_conversion.domain.model.Symbols
+import com.alaa.currencyconverter.currency_conversion.domain.usecases.CalculateRatesCase
+import com.google.gson.Gson
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import io.mockk.every
+import io.mockk.mockk
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 class CurrencyConversionFragmentTest {
 
-   /* private val mockGetSymbolsCase = mockk<GetSymbolsCase>(relaxed = true)
-    private val mockGetRatesCase = mockk<GetRatesCase>(relaxed = true)
-    private val mockCalculateRatesCase = mockk<CalculateRatesCase>(relaxed = true)
-
-    private val symbolsObject = symbolsDTO().apply { addSymbolsList() }
-    private val ratesDTO = ratesDTO().apply { addRatesList() }
+    @BindValue
+    val mockViewModel = mockk<CurrencyConverterViewModel>(relaxed = true)
 
     @BindValue
-    val mockViewModel =
-        CurrencyConverterViewModel(
-            mockGetSymbolsCase,
-            mockGetRatesCase
-        )
+    val mockConversionViewModel = mockk<ConversionViewModel>(relaxed = true)
 
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
@@ -31,123 +48,57 @@ class CurrencyConversionFragmentTest {
     }
 
     @Test
-    fun loading_currencies_state() {
+    fun loading_view_state() {
         // Given
-        mockViewModel.symbolsViewState.postValue(ViewState.LOADING)
+        every { mockViewModel.viewSate.value } returns ViewState.LOADING
+        every { mockConversionViewModel.fromAmount.value } returns ""
+        every { mockConversionViewModel.toAmount.value } returns ""
 
         // When
         launchFragmentInHiltContainer<CurrencyConversionFragment>()
 
         // Then
-        onView(withId(R.id.cl_main_data)).check(matches(not(isDisplayed())))
         onView(withId(R.id.pb_main)).check(matches(isDisplayed()))
     }
 
     @Test
-    fun from_currency_field_has_currencies() {
+    fun from_list_has_data() {
         // Given
-        val symbolsObject = symbolsDTO()
-
-        // When
-        launchFragmentInHiltContainer<CurrencyConversionFragment> {
-            (this as CurrencyConversionFragment).updateUI(DataState.Success(symbolsObject))
-        }
-        onView(withId(R.id.actv_from_currency)).perform(click())
-
-        // Then
-        onView(withText("AED")).inRoot(isPlatformPopup()).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun to_currency_field_has_currencies() {
-        // Given
-        val symbolsObject = symbolsDTO()
-
-        // When
-        launchFragmentInHiltContainer<CurrencyConversionFragment> {
-            (this as CurrencyConversionFragment).updateUI(DataState.Success(symbolsObject))
-        }
-        onView(withId(R.id.actv_to_currency)).perform(click())
-
-        // Then
-        onView(withText("AED")).inRoot(isPlatformPopup()).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun currencies_changed_in_viewModel() {
-        // Given
-        mockViewModel.symbolsViewState.postValue(ViewState.SHOW_CONTENT)
-        val symbolsObject = symbolsDTO()
-
-        // When
-        launchFragmentInHiltContainer<CurrencyConversionFragment> {
-            (this as CurrencyConversionFragment).updateUI(DataState.Success(symbolsObject))
-        }
-        onView(withId(R.id.actv_from_currency)).perform(click())
-        onView(withText("AED")).inRoot(isPlatformPopup()).perform(click())
-
-        // Then
-        Thread.sleep(5000)
-        assert(mockViewModel.fromCurrenciesLiveData.value == "AED")
-    }
-
-    @Test
-    fun base_rate_changed_in_viewModel() {
-        // Given
-        val ratesDTO = ratesDTO()
-
-        // When
-        launchFragmentInHiltContainer<CurrencyConversionFragment> {
-            (this as CurrencyConversionFragment).updateRatesUI(DataState.Success(ratesDTO))
-        }
-
-        // Then
-        assert(mockViewModel.baseRate == ratesDTO.ratesList?.find { it.name == ratesDTO.base }?.amount)
-        Log.d("TAG", "base_rate_changed_in_viewModel:${mockViewModel.baseRate} ")
-    }
-
-    @Test
-    fun conversion_test() {
-        // Given
+        every { mockViewModel.viewSate.value } returns ViewState.SHOW_CONTENT
+        every { mockConversionViewModel.fromAmount.value } returns ""
+        every { mockConversionViewModel.toAmount.value } returns ""
 
         // When
         launchFragmentInHiltContainer<CurrencyConversionFragment> {
             this as CurrencyConversionFragment
-            updateUI(DataState.Success(symbolsObject))
-            updateRatesUI(DataState.Success(ratesDTO))
+            updateUI(DataState.Success(currencyData()))
         }
-        selectAEDInLists()
-
-        onView(withId(R.id.et_amounts_from)).perform(typeText("40.0"))
 
         // Then
-        mockViewModel.calculateRate()
-
-        Thread.sleep(2000)
-        Log.d("TAG", "conversion_test:${mockViewModel.convertedRate.value} ")
-        assert(mockViewModel.convertedRate.value == 40.0)
-    }
-
-    private fun selectAEDInLists() {
         onView(withId(R.id.actv_from_currency)).perform(click())
-        Thread.sleep(2000)
-        onView(withText("AED")).inRoot(isPlatformPopup()).perform(click())
+        onView(withText("AED")).inRoot(isPlatformPopup()).check(matches(isDisplayed()))
 
         onView(withId(R.id.actv_to_currency)).perform(click())
-        Thread.sleep(2000)
-        onView(withText("AED")).inRoot(isPlatformPopup()).perform(click())
-
+        onView(withText("AED")).inRoot(isPlatformPopup()).check(matches(isDisplayed()))
     }
 
-    private fun symbolsDTO(): SymbolsDTO {
+    private fun currencyData(): CurrencyData =
+        CurrencyData(
+            rates().success,
+            symbols().symbolsList,
+            symbols().currenciesList,
+            rates().ratesList
+        )
+
+    private fun symbols(): Symbols {
         val symbolsSuccess =
             UITestFunctions.getJson("network_responses/Symbols/symbols_success_response.json")
-        return Gson().fromJson(symbolsSuccess, SymbolsDTO::class.java)
+        return Gson().fromJson(symbolsSuccess, SymbolsDTO::class.java).toDomainModel()
     }
 
-    private fun ratesDTO(): RatesDTO {
+    private fun rates(): Rates {
         val ratesSuccess =
             UITestFunctions.getJson("network_responses/Rates/rates_success_response.json")
-        return Gson().fromJson(ratesSuccess, RatesDTO::class.java)
-    }*/
+        return Gson().fromJson(ratesSuccess, RatesDTO::class.java).toDomainModel()
+    }
 }
