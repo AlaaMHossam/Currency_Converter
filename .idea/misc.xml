@@ -3,7 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.186" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24351851851851852" />
+        <entry key="app/src/main/res/layout/fragment_currency_conversion.xml" value="0.24351851851851852" />
+        <entry key="app/src/main/res/layout/layout_main_amounts.xml" value="0.24351851851851852" />
+        <entry key="common_ui/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.1695" />
+        <entry key="common_ui/src/main/res/drawable/ic_baseline_code_24.xml" value="0.16" />
+        <entry key="common_ui/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1695" />
+        <entry key="features/currency_conversion/src/main/res/layout/fragment_currency_conversion.xml" value="0.17685185185185184" />
+        <entry key="features/currency_conversion/src/main/res/layout/layout_main_amounts.xml" value="0.14010416666666667" />
       </map>
     </option>
   </component>
