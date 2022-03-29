@@ -10,5 +10,6 @@ data class HistoryConversionItem(
     val fromCurrency: String,
     val fromAmount: Double,
     val toCurrency: String,
-    val toAmount: Double
+    val toAmount: Double,
+    val timestamp: Long
 )

@@ -57,6 +57,8 @@ dependencies {
     // Modules Dependencies
     implementation project(':core')
     implementation project(':common_ui')
+    implementation project(':common_data')
+    implementation project(':db')
 
     // Base Generated Dependencies
     implementation "androidx.core:core-ktx:$core_ktx_version"
