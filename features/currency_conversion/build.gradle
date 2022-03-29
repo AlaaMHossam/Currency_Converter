@@ -87,7 +87,7 @@ dependencies {
     testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     kaptTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 
-    testImplementation 'org.json:json:20180813'
+    testImplementation 'org.json:json:20220320'
 
     /** Fragment Testing */
     debugImplementation("androidx.fragment:fragment-testing:$fragment_testing_version")
