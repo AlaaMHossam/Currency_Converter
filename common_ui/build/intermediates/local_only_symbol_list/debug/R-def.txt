@@ -14,5 +14,6 @@ drawable ic_launcher_foreground
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name
+string error_message
 style Theme.App.Starting
 style Theme.CurrencyConverter

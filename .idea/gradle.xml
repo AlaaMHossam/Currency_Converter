@@ -17,7 +17,9 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/db" />
             <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/features/conversions_details" />
             <option value="$PROJECT_DIR$/features/currency_conversion" />
+            <option value="$PROJECT_DIR$/navigation" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

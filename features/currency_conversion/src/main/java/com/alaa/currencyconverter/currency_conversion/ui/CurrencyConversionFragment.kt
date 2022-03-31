@@ -15,12 +15,17 @@ import com.alaa.currencyconverter.currency_conversion.R
 import com.alaa.currencyconverter.currency_conversion.databinding.FragmentCurrencyConversionBinding
 import com.alaa.currencyconverter.currency_conversion.domain.model.CurrencyData
 import com.alaa.currencyconverter.currency_conversion.domain.model.Symbols
+import com.alaa.currencyconverter.navigation.MainNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CurrencyConversionFragment : BaseFragment<FragmentCurrencyConversionBinding>(),
     CurrencyConversionCallback {
+
+    @Inject
+    lateinit var mainNavigator: MainNavigator
 
     private val viewModel by viewModels<CurrencyConverterViewModel>()
     private val conversionViewModel by viewModels<ConversionViewModel>()
@@ -111,4 +116,6 @@ class CurrencyConversionFragment : BaseFragment<FragmentCurrencyConversionBindin
     private fun updateSaveConversionUI(dataState: DataState<Unit>) {
         if (dataState is DataState.Error) updateErrorUI(dataState.exception)
     }
+
+    fun startDetails() = mainNavigator.detailsFlow()
 }

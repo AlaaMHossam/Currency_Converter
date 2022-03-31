@@ -9,8 +9,8 @@ import androidx.room.Query
 interface HistoryConversionDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addConversion(historyConversionItem: HistoryConversionItem)
+    suspend fun addConversion(historyConversionItem: HistoryConversionData.HistoryConversionItem)
 
     @Query("SELECT * FROM HistoryConversionItem")
-    suspend fun getAllConversions(): List<HistoryConversionItem>
+    suspend fun getAllConversions(): List<HistoryConversionData.HistoryConversionItem>
 }

@@ -2,12 +2,11 @@ package com.alaa.currencyconverter.currency_conversion.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alaa.currencyconverter.common_data.data.model.HistoryConversionItem
+import com.alaa.currencyconverter.common_data.data.model.HistoryConversionData
 import com.alaa.currencyconverter.core.states.DataState
 import com.alaa.currencyconverter.core.states.DataState.Success
 import com.alaa.currencyconverter.core.states.ViewState.*
 import com.alaa.currencyconverter.currency_conversion.domain.model.CurrencyData
-import com.alaa.currencyconverter.currency_conversion.domain.usecases.CalculateRatesCase
 import com.alaa.currencyconverter.currency_conversion.domain.usecases.GetCurrencyDataCase
 import com.alaa.currencyconverter.currency_conversion.domain.usecases.SaveConversionCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -59,7 +58,14 @@ class CurrencyConverterViewModel
     ) = viewModelScope.launch {
         val timestamp = Calendar.getInstance().timeInMillis
         val historyConversionItem =
-            HistoryConversionItem(0, fromCurrency, fromAmount, toCurrency, toAmount, timestamp)
+            HistoryConversionData.HistoryConversionItem(
+                0,
+                fromCurrency,
+                fromAmount,
+                toCurrency,
+                toAmount,
+                timestamp
+            )
 
         val saveConversionResult = saveConversionCase(historyConversionItem)
         _saveConversionData.emit(saveConversionResult)

@@ -59,6 +59,7 @@ dependencies {
     implementation project(':common_ui')
     implementation project(':common_data')
     implementation project(':db')
+    implementation project(':navigation')
 
     // Base Generated Dependencies
     implementation "androidx.core:core-ktx:$core_ktx_version"

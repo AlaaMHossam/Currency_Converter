@@ -20,7 +20,7 @@ public class LayoutMainAmountsBindingImpl extends LayoutMainAmountsBinding imple
     private final androidx.constraintlayout.widget.ConstraintLayout mboundView0;
     // variables
     @Nullable
-    private final androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged mCallback3;
+    private final androidx.databinding.adapters.TextViewBindingAdapter.AfterTextChanged mCallback4;
     // values
     // listeners
     // Inverse Binding Event Handlers
@@ -76,7 +76,7 @@ public class LayoutMainAmountsBindingImpl extends LayoutMainAmountsBinding imple
         this.mboundView0.setTag(null);
         setRootTag(root);
         // listeners
-        mCallback3 = new com.alaa.currencyconverter.currency_conversion.generated.callback.AfterTextChanged(this, 1);
+        mCallback4 = new com.alaa.currencyconverter.currency_conversion.generated.callback.AfterTextChanged(this, 1);
         invalidateAll();
     }
 
@@ -202,7 +202,7 @@ public class LayoutMainAmountsBindingImpl extends LayoutMainAmountsBinding imple
         if ((dirtyFlags & 0x8L) != 0) {
             // api target 1
 
-            androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.etAmountsFrom, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, mCallback3, etAmountsFromandroidTextAttrChanged);
+            androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher(this.etAmountsFrom, (androidx.databinding.adapters.TextViewBindingAdapter.BeforeTextChanged)null, (androidx.databinding.adapters.TextViewBindingAdapter.OnTextChanged)null, mCallback4, etAmountsFromandroidTextAttrChanged);
         }
         if ((dirtyFlags & 0xdL) != 0) {
             // api target 1
