@@ -1,5 +1,8 @@
 package com.alaa.currencyconverter.conversions_details.domain.usecases
 
+import com.alaa.currencyconverter.common_data.data.model.HistoryConversionHeader
+import com.alaa.currencyconverter.common_data.data.model.HistoryConversionItem
+import com.alaa.currencyconverter.common_data.data.model.HistoryData
 import com.alaa.currencyconverter.conversions_details.domain.repository.ConversionsDetailsRepository
 import io.mockk.mockk
 import org.junit.Test
@@ -12,66 +15,58 @@ class GetConversionsCaseTest {
     private val getConversionsCase = GetConversionsCase(mockRepository)
 
     @Test
-    fun isWithinThreeDysWithOneDaysBefore() {
+    fun addHeaderAddsHeaderItem() {
         // Given
-        val calendar = Calendar.getInstance()
-        calendar.time = Date()
-
-        calendar.add(Calendar.DATE, -1)
-        val twoDayBefore = calendar.time
+        val dateTimestamp = 1648844899000
+        val historyConversionItem =
+            HistoryConversionItem(0, "", 0.0, "", 0.0, dateTimestamp)
+        val allDataList = mutableListOf<HistoryData>()
+        val historyHeader = HistoryConversionHeader(getConversionsCase.dayOfWeek(dateTimestamp))
 
         // When
-        val result = getConversionsCase.isWithinThreeDays(twoDayBefore.time)
+        getConversionsCase.addHeader(historyConversionItem, allDataList)
 
         // Then
-        assert(result)
+        assert(allDataList.contains(historyHeader))
     }
 
     @Test
-    fun isWithinThreeDysWithTwoDaysBefore() {
-        // Given
-        val calendar = Calendar.getInstance()
-        calendar.time = Date()
+    fun isWithinThreeDays() {
+        for (i in 1..3) {
+            // Given
+            val calendar = Calendar.getInstance()
 
-        calendar.add(Calendar.DATE, -2)
-        val twoDayBefore = calendar.time
+            // When
+            calendar.add(Calendar.DATE, -i)
+            val result = getConversionsCase.isWithinThreeDays(calendar.time.time)
 
-        // When
-        val result = getConversionsCase.isWithinThreeDays(twoDayBefore.time)
-
-        // Then
-        assert(result)
+            // Then
+            assert(result)
+        }
     }
 
     @Test
-    fun isWithinThreeDysWithThreeDaysBefore() {
+    fun isMoreThanThreeDays() {
         // Given
         val calendar = Calendar.getInstance()
-        calendar.time = Date()
-
-        calendar.add(Calendar.DATE, -3)
-        val twoDayBefore = calendar.time
 
         // When
-        val result = getConversionsCase.isWithinThreeDays(twoDayBefore.time)
-
-        // Then
-        assert(result)
-    }
-
-    @Test
-    fun isWithinThreeDysWithFourDaysBefore() {
-        // Given
-        val calendar = Calendar.getInstance()
-        calendar.time = Date()
-
         calendar.add(Calendar.DATE, -4)
-        val twoDayBefore = calendar.time
-
-        // When
-        val result = getConversionsCase.isWithinThreeDays(twoDayBefore.time)
+        val result = getConversionsCase.isWithinThreeDays(calendar.time.time)
 
         // Then
         assert(!result)
+    }
+
+    @Test
+    fun dayOfWeekIsCorrect() {
+        // Given
+        val fridayTimestamp = 1648844899000
+
+        // When
+        val result = getConversionsCase.dayOfWeek(fridayTimestamp)
+
+        // Then
+        assert(result == "Friday")
     }
 }

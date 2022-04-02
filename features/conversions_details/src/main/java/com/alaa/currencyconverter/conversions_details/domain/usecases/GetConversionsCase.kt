@@ -31,7 +31,7 @@ class GetConversionsCase
         return allDataList.toList()
     }
 
-    private fun addHeader(item: HistoryConversionItem, allDataList: MutableList<HistoryData>) {
+    fun addHeader(item: HistoryConversionItem, allDataList: MutableList<HistoryData>) {
         val historyConversionHeader = HistoryConversionHeader(dayOfWeek(item.timestamp))
         if (!allDataList.contains(historyConversionHeader)) allDataList.add(historyConversionHeader)
     }
@@ -43,7 +43,7 @@ class GetConversionsCase
         return toDays <= 3
     }
 
-    private fun dayOfWeek(timestamp: Long): String {
+    fun dayOfWeek(timestamp: Long): String {
         val formatter = SimpleDateFormat("EEEE", Locale.US)
         return formatter.format(Date(timestamp))
     }
