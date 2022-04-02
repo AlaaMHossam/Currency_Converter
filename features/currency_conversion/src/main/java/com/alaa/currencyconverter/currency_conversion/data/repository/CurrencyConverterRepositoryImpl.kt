@@ -1,7 +1,7 @@
 package com.alaa.currencyconverter.currency_conversion.data.repository
 
 import com.alaa.currencyconverter.common_data.data.model.HistoryConversionDao
-import com.alaa.currencyconverter.common_data.data.model.HistoryConversionData
+import com.alaa.currencyconverter.common_data.data.model.HistoryConversionItem
 import com.alaa.currencyconverter.core.states.DataState
 import com.alaa.currencyconverter.currency_conversion.data.client.CurrencyConverterClient
 import com.alaa.currencyconverter.currency_conversion.data.model.rates.toDomainModel
@@ -33,7 +33,7 @@ constructor(
             DataState.Error(exception)
         }
 
-    override suspend fun saveConversion(historyConversionItem: HistoryConversionData.HistoryConversionItem): DataState<Unit> =
+    override suspend fun saveConversion(historyConversionItem: HistoryConversionItem): DataState<Unit> =
         try {
             DataState.Success(historyConversionDao.addConversion(historyConversionItem))
         } catch (exception: Exception) {

@@ -4,7 +4,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.alaa.currencyconverter.common_data.data.model.HistoryConversionData
+import com.alaa.currencyconverter.common_data.data.model.HistoryData
 import com.alaa.currencyconverter.common_ui.R.*
 import com.alaa.currencyconverter.conversions_details.R
 import com.alaa.currencyconverter.conversions_details.databinding.ConversionsDetailsFragmentBinding
@@ -21,8 +21,6 @@ class ConversionsDetailsFragment : BaseFragment<ConversionsDetailsFragmentBindin
     private val viewModel by viewModels<ConversionsViewModel>()
 
     private lateinit var binding: ConversionsDetailsFragmentBinding
-
-    private val adapter = ConversionsAdapter()
 
     override fun onBindData(binding: ConversionsDetailsFragmentBinding) {
         super.onBindData(binding)
@@ -41,14 +39,16 @@ class ConversionsDetailsFragment : BaseFragment<ConversionsDetailsFragmentBindin
         }
     }
 
-    private fun updateUI(dataState: DataState<List<HistoryConversionData.HistoryConversionItem>>) {
+    private fun updateUI(dataState: DataState<List<HistoryData>>) {
         if (dataState is DataState.Success) updateSuccessUI(dataState.data)
         else updateErrorUI(dataState.exception)
     }
 
-    private fun updateSuccessUI(data: List<HistoryConversionData.HistoryConversionItem>?) {
-        binding.rvConversionsDetails.adapter = adapter
-        adapter.submitList(data)
+    private fun updateSuccessUI(data: List<HistoryData>?) {
+        if (data?.isNotEmpty() == true){
+            val adapter = ConversionsAdapter(data)
+            binding.rvConversionsDetails.adapter = adapter
+        }
     }
 
     private fun updateErrorUI(exception: Exception?) {

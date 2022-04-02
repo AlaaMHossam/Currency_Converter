@@ -2,7 +2,7 @@ package com.alaa.currencyconverter.conversions_details.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alaa.currencyconverter.common_data.data.model.HistoryConversionData
+import com.alaa.currencyconverter.common_data.data.model.HistoryData
 import com.alaa.currencyconverter.conversions_details.domain.usecases.GetConversionsCase
 import com.alaa.currencyconverter.core.states.DataState
 import com.alaa.currencyconverter.core.states.DataState.Success
@@ -18,7 +18,7 @@ class ConversionsViewModel
 @Inject constructor(private val getConversionsCase: GetConversionsCase) : ViewModel() {
 
     private val _conversionsData =
-        MutableStateFlow<DataState<List<HistoryConversionData.HistoryConversionItem>>>(Success(listOf()))
+        MutableStateFlow<DataState<List<HistoryData>>>(Success(listOf()))
     val conversionsData = _conversionsData.asStateFlow()
 
     private val _viewState = MutableStateFlow(LOADING)

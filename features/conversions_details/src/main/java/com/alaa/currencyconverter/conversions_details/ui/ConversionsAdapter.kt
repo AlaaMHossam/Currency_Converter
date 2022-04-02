@@ -2,41 +2,48 @@ package com.alaa.currencyconverter.conversions_details.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.alaa.currencyconverter.common_data.data.model.HistoryConversionData
-import com.alaa.currencyconverter.common_data.data.model.HistoryConversionDataDiffUtil
+import com.alaa.currencyconverter.common_data.data.model.HistoryConversionHeader
+import com.alaa.currencyconverter.common_data.data.model.HistoryConversionItem
+import com.alaa.currencyconverter.common_data.data.model.HistoryData
 import com.alaa.currencyconverter.conversions_details.databinding.ConversionsDetailsHeaderItemBinding
 import com.alaa.currencyconverter.conversions_details.databinding.ConversionsDetailsItemBinding
 
-class ConversionsAdapter :
-    ListAdapter<HistoryConversionData, RecyclerView.ViewHolder>(HistoryConversionDataDiffUtil()) {
+class ConversionsAdapter(private val dataList : List<HistoryData>):
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val ITEM_VIEW_TYPE_HEADER = 0
-    private val ITEM_VIEW_TYPE_ITEM = 1
+    companion object{
+        const val ITEM_VIEW_TYPE_HEADER = 0
+        const val ITEM_VIEW_TYPE_ITEM = 1
+    }
+
+    override fun getItemCount(): Int = dataList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return if (viewType == ITEM_VIEW_TYPE_HEADER) {
-            HeaderViewHolder(ConversionsDetailsHeaderItemBinding.inflate(inflater, parent, false))
-        } else {
-            ItemViewHolder(ConversionsDetailsItemBinding.inflate(inflater, parent, false))
+        return when (viewType) {
+            ITEM_VIEW_TYPE_HEADER -> {
+                HeaderViewHolder(ConversionsDetailsHeaderItemBinding.inflate(inflater, parent, false))
+            }
+            else -> {
+                ItemViewHolder(ConversionsDetailsItemBinding.inflate(inflater, parent, false))
+            }
         }
     }
 
-    override fun getItemViewType(position: Int): Int = when (getItem(position)) {
-        is HistoryConversionData.HistoryConversionHeader -> ITEM_VIEW_TYPE_HEADER
-        is HistoryConversionData.HistoryConversionItem -> ITEM_VIEW_TYPE_ITEM
+    override fun getItemViewType(position: Int): Int = when (dataList[position]) {
+        is HistoryConversionHeader -> ITEM_VIEW_TYPE_HEADER
+        is HistoryConversionItem -> ITEM_VIEW_TYPE_ITEM
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
         when (holder) {
             is HeaderViewHolder -> {
-                val headerItem = getItem(position) as String
+                val headerItem = dataList[position] as HistoryConversionHeader
                 holder.bind(headerItem)
             }
             is ItemViewHolder -> {
-                val item = getItem(position) as HistoryConversionData.HistoryConversionItem
+                val item = dataList[position] as HistoryConversionItem
                 holder.bind(item)
             }
             else -> {}
@@ -44,17 +51,17 @@ class ConversionsAdapter :
 
     inner class HeaderViewHolder(private val headerBinding: ConversionsDetailsHeaderItemBinding) :
         RecyclerView.ViewHolder(headerBinding.root) {
-        fun bind(date: String) {
-            headerBinding.data = date
+        fun bind(conversionHeader: HistoryConversionHeader) {
+            headerBinding.data = conversionHeader.date
             headerBinding.executePendingBindings()
         }
     }
 
-    inner class ItemViewHolder(private val binding: ConversionsDetailsItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(historyConversionItem: HistoryConversionData.HistoryConversionItem) {
-            binding.data = historyConversionItem
-            binding.executePendingBindings()
+    inner class ItemViewHolder(private val ItemBinding: ConversionsDetailsItemBinding) :
+        RecyclerView.ViewHolder(ItemBinding.root) {
+        fun bind(historyConversionItem: HistoryConversionItem) {
+            ItemBinding.data = historyConversionItem
+            ItemBinding.executePendingBindings()
         }
     }
 }

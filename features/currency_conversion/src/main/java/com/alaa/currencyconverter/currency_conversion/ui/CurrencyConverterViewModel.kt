@@ -2,7 +2,7 @@ package com.alaa.currencyconverter.currency_conversion.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alaa.currencyconverter.common_data.data.model.HistoryConversionData
+import com.alaa.currencyconverter.common_data.data.model.HistoryConversionItem
 import com.alaa.currencyconverter.core.states.DataState
 import com.alaa.currencyconverter.core.states.DataState.Success
 import com.alaa.currencyconverter.core.states.ViewState.*
@@ -58,7 +58,7 @@ class CurrencyConverterViewModel
     ) = viewModelScope.launch {
         val timestamp = Calendar.getInstance().timeInMillis
         val historyConversionItem =
-            HistoryConversionData.HistoryConversionItem(
+            HistoryConversionItem(
                 0,
                 fromCurrency,
                 fromAmount,
