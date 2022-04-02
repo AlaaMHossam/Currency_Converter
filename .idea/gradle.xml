@@ -12,7 +12,14 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/common_data" />
+            <option value="$PROJECT_DIR$/common_ui" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/db" />
+            <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/features/conversions_details" />
+            <option value="$PROJECT_DIR$/features/currency_conversion" />
+            <option value="$PROJECT_DIR$/navigation" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

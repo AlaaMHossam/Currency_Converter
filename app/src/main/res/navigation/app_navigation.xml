@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/currencyConversionFragment">
+
+    <fragment
+        tools:layout="@layout/fragment_currency_conversion"
+        android:id="@+id/currencyConversionFragment"
+        android:name="com.alaa.currencyconverter.currency_conversion.ui.CurrencyConversionFragment"
+        android:label="CurrencyConversionFragment" />
+    <fragment
+        tools:layout="@layout/conversions_details_fragment"
+        android:id="@+id/conversionsDetailsFragment"
+        android:name="com.alaa.currencyconverter.conversions_details.ui.ConversionsDetailsFragment"
+        android:label="ConversionsDetailsFragment" />
+    <action
+        android:id="@+id/action_global_conversionsDetailsFragment"
+        app:destination="@id/conversionsDetailsFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+</navigation>

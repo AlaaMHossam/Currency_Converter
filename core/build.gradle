@@ -44,6 +44,9 @@ android {
 
 dependencies {
 
+    // Modules Dependencies
+    implementation project(':common_ui')
+
     // Base Generated Dependencies
     implementation "androidx.core:core-ktx:$core_ktx_version"
     implementation "androidx.appcompat:appcompat:$appCompat_version"
@@ -74,4 +77,15 @@ dependencies {
     // For local unit tests
     testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     kaptTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    /** Fragment Testing */
+    debugImplementation("androidx.fragment:fragment-testing:$fragment_testing_version")
+    debugImplementation("androidx.fragment:fragment-ktx:$fragment_ktx_version")
+    debugImplementation("androidx.test:core:$test_core_version")
+    debugImplementation("androidx.test:rules:$test_rules_version")
+    debugImplementation("androidx.test:runner:$test_runner_version")
+
+    // MockK
+    testImplementation "io.mockk:mockk:$mockk_version"
+    androidTestImplementation "io.mockk:mockk-android:$mockk_version"
 }
