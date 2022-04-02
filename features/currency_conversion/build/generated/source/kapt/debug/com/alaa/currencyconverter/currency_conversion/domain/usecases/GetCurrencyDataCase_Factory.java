@@ -3,9 +3,13 @@ package com.alaa.currencyconverter.currency_conversion.domain.usecases;
 import com.alaa.currencyconverter.currency_conversion.domain.repository.CurrencyConverterRepository;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
+import dagger.internal.QualifierMetadata;
+import dagger.internal.ScopeMetadata;
 import javax.annotation.processing.Generated;
 import javax.inject.Provider;
 
+@ScopeMetadata
+@QualifierMetadata
 @DaggerGenerated
 @Generated(
     value = "dagger.internal.codegen.ComponentProcessor",

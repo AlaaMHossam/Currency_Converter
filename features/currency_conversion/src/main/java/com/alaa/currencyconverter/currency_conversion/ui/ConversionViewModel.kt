@@ -5,9 +5,10 @@ import com.alaa.currencyconverter.currency_conversion.domain.model.CurrencyData
 import com.alaa.currencyconverter.currency_conversion.domain.usecases.CalculateRatesCase
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ConversionViewModel : ViewModel() {
+class ConversionViewModel() : ViewModel() {
 
     private val calculateRatesCase = CalculateRatesCase()
+    lateinit var currencyConversionCallback: CurrencyConversionCallback
 
     var currencyData: CurrencyData? = null
 
@@ -29,10 +30,19 @@ class ConversionViewModel : ViewModel() {
         currencyData?.ratesList?.find { it.name == selectedCurrencyAbv }?.amount ?: 0.0
 
     fun calculateCurrency() {
-        toAmount.value = calculateRatesCase(
-            if (fromAmount.value.isNotEmpty()) fromAmount.value.toDouble() else 0.0,
-            fromRate.value,
-            toRate.value
-        )
+        try {
+            toAmount.value = calculateRatesCase(
+                if (fromAmount.value.isNotEmpty()) fromAmount.value.toDouble() else 0.0,
+                fromRate.value,
+                toRate.value
+            )
+
+            currencyConversionCallback.onConversionSuccess(
+                fromAmount.value.toDouble(),
+                toAmount.value.toDouble()
+            )
+        } catch (exception: Exception) {
+            currencyConversionCallback.onConversionFail(exception)
+        }
     }
 }

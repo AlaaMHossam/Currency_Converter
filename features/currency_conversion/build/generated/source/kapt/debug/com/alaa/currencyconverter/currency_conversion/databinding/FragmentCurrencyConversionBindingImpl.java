@@ -15,15 +15,14 @@ public class FragmentCurrencyConversionBindingImpl extends FragmentCurrencyConve
         sIncludes = new androidx.databinding.ViewDataBinding.IncludedLayouts(12);
         sIncludes.setIncludes(1, 
             new String[] {"layout_main_amounts"},
-            new int[] {5},
+            new int[] {6},
             new int[] {com.alaa.currencyconverter.currency_conversion.R.layout.layout_main_amounts});
         sViewsWithIds = new android.util.SparseIntArray();
-        sViewsWithIds.put(R.id.gl_main_hor_30, 6);
-        sViewsWithIds.put(R.id.til_from_currency, 7);
-        sViewsWithIds.put(R.id.actv_from_currency, 8);
-        sViewsWithIds.put(R.id.til_to_currency, 9);
-        sViewsWithIds.put(R.id.actv_to_currency, 10);
-        sViewsWithIds.put(R.id.btn_main_details, 11);
+        sViewsWithIds.put(R.id.gl_main_hor_30, 7);
+        sViewsWithIds.put(R.id.til_from_currency, 8);
+        sViewsWithIds.put(R.id.actv_from_currency, 9);
+        sViewsWithIds.put(R.id.til_to_currency, 10);
+        sViewsWithIds.put(R.id.actv_to_currency, 11);
     }
     // views
     @NonNull
@@ -31,6 +30,8 @@ public class FragmentCurrencyConversionBindingImpl extends FragmentCurrencyConve
     // variables
     @Nullable
     private final android.view.View.OnClickListener mCallback2;
+    @Nullable
+    private final android.view.View.OnClickListener mCallback3;
     @Nullable
     private final android.view.View.OnClickListener mCallback1;
     // values
@@ -42,19 +43,20 @@ public class FragmentCurrencyConversionBindingImpl extends FragmentCurrencyConve
     }
     private FragmentCurrencyConversionBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 2
-            , (com.google.android.material.textfield.MaterialAutoCompleteTextView) bindings[8]
-            , (com.google.android.material.textfield.MaterialAutoCompleteTextView) bindings[10]
-            , (android.widget.Button) bindings[4]
-            , (android.widget.Button) bindings[11]
+            , (com.google.android.material.textfield.MaterialAutoCompleteTextView) bindings[9]
+            , (com.google.android.material.textfield.MaterialAutoCompleteTextView) bindings[11]
+            , (android.widget.Button) bindings[5]
+            , (android.widget.Button) bindings[3]
             , (androidx.constraintlayout.widget.ConstraintLayout) bindings[1]
-            , (androidx.constraintlayout.widget.Guideline) bindings[6]
-            , (com.alaa.currencyconverter.currency_conversion.databinding.LayoutMainAmountsBinding) bindings[5]
+            , (androidx.constraintlayout.widget.Guideline) bindings[7]
+            , (com.alaa.currencyconverter.currency_conversion.databinding.LayoutMainAmountsBinding) bindings[6]
             , (android.widget.ImageButton) bindings[2]
-            , (android.widget.ProgressBar) bindings[3]
-            , (com.google.android.material.textfield.TextInputLayout) bindings[7]
-            , (com.google.android.material.textfield.TextInputLayout) bindings[9]
+            , (android.widget.ProgressBar) bindings[4]
+            , (com.google.android.material.textfield.TextInputLayout) bindings[8]
+            , (com.google.android.material.textfield.TextInputLayout) bindings[10]
             );
         this.btnCurrencyConversionRetry.setTag(null);
+        this.btnMainDetails.setTag(null);
         this.clMainData.setTag(null);
         setContainedBinding(this.includedAmounts);
         this.ivToCurrency.setTag(null);
@@ -64,6 +66,7 @@ public class FragmentCurrencyConversionBindingImpl extends FragmentCurrencyConve
         setRootTag(root);
         // listeners
         mCallback2 = new com.alaa.currencyconverter.currency_conversion.generated.callback.OnClickListener(this, 2);
+        mCallback3 = new com.alaa.currencyconverter.currency_conversion.generated.callback.OnClickListener(this, 3);
         mCallback1 = new com.alaa.currencyconverter.currency_conversion.generated.callback.OnClickListener(this, 1);
         invalidateAll();
     }
@@ -249,7 +252,8 @@ public class FragmentCurrencyConversionBindingImpl extends FragmentCurrencyConve
         if ((dirtyFlags & 0x20L) != 0) {
             // api target 1
 
-            this.btnCurrencyConversionRetry.setOnClickListener(mCallback2);
+            this.btnCurrencyConversionRetry.setOnClickListener(mCallback3);
+            this.btnMainDetails.setOnClickListener(mCallback2);
             this.ivToCurrency.setOnClickListener(mCallback1);
         }
         if ((dirtyFlags & 0x32L) != 0) {
@@ -271,6 +275,23 @@ public class FragmentCurrencyConversionBindingImpl extends FragmentCurrencyConve
     public final void _internalCallbackOnClick(int sourceId , android.view.View callbackArg_0) {
         switch(sourceId) {
             case 2: {
+                // localize variables for thread safety
+                // fragment
+                com.alaa.currencyconverter.currency_conversion.ui.CurrencyConversionFragment fragment = mFragment;
+                // fragment != null
+                boolean fragmentJavaLangObjectNull = false;
+
+
+
+                fragmentJavaLangObjectNull = (fragment) != (null);
+                if (fragmentJavaLangObjectNull) {
+
+
+                    fragment.startDetails();
+                }
+                break;
+            }
+            case 3: {
                 // localize variables for thread safety
                 // viewModel
                 com.alaa.currencyconverter.currency_conversion.ui.CurrencyConverterViewModel viewModel = mViewModel;

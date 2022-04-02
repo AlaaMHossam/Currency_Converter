@@ -60,9 +60,12 @@ dependencies {
     // Modules Dependencies
     implementation project(':core')
     implementation project(':common_ui')
+    implementation project(':db')
+    implementation project(':navigation')
 
     // Feature Modules
     implementation project(':features:currency_conversion')
+    implementation project(':features:conversions_details')
 
     // Base Generated Dependencies
     implementation "androidx.core:core-ktx:$core_ktx_version"

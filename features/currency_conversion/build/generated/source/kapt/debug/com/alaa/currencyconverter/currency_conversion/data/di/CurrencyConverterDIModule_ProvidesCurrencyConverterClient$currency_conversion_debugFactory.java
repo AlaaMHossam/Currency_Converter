@@ -4,10 +4,14 @@ import com.alaa.currencyconverter.currency_conversion.data.client.CurrencyConver
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.Preconditions;
+import dagger.internal.QualifierMetadata;
+import dagger.internal.ScopeMetadata;
 import javax.annotation.processing.Generated;
 import javax.inject.Provider;
 import retrofit2.Retrofit;
 
+@ScopeMetadata("javax.inject.Singleton")
+@QualifierMetadata
 @DaggerGenerated
 @Generated(
     value = "dagger.internal.codegen.ComponentProcessor",

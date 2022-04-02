@@ -1,6 +1,7 @@
 package com.alaa.currencyconverter.currency_conversion.ui
 
 import android.R.layout.simple_list_item_1
+import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -14,11 +15,17 @@ import com.alaa.currencyconverter.currency_conversion.R
 import com.alaa.currencyconverter.currency_conversion.databinding.FragmentCurrencyConversionBinding
 import com.alaa.currencyconverter.currency_conversion.domain.model.CurrencyData
 import com.alaa.currencyconverter.currency_conversion.domain.model.Symbols
+import com.alaa.currencyconverter.navigation.MainNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class CurrencyConversionFragment : BaseFragment<FragmentCurrencyConversionBinding>() {
+class CurrencyConversionFragment : BaseFragment<FragmentCurrencyConversionBinding>(),
+    CurrencyConversionCallback {
+
+    @Inject
+    lateinit var mainNavigator: MainNavigator
 
     private val viewModel by viewModels<CurrencyConverterViewModel>()
     private val conversionViewModel by viewModels<ConversionViewModel>()
@@ -37,10 +44,16 @@ class CurrencyConversionFragment : BaseFragment<FragmentCurrencyConversionBindin
         this.binding = binding
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        conversionViewModel.currencyConversionCallback = this
+    }
+
     override fun initView() {
         super.initView()
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.currencyData.collectLatest { updateUI(it) }
+            viewModel.saveConversionData.collectLatest { updateSaveConversionUI(it) }
         }
     }
 
@@ -88,4 +101,21 @@ class CurrencyConversionFragment : BaseFragment<FragmentCurrencyConversionBindin
 
         conversionViewModel.calculateCurrency()
     }
+
+    override fun onConversionSuccess(fromAmount: Double, toAmount: Double) {
+        viewModel.saveConversion(
+            binding.actvFromCurrency.text.toString(), fromAmount,
+            binding.actvToCurrency.text.toString(), toAmount
+        )
+    }
+
+    override fun onConversionFail(exception: Exception) {
+        Toast.makeText(requireContext(), getString(R.string.error_message), LENGTH_LONG).show()
+    }
+
+    private fun updateSaveConversionUI(dataState: DataState<Unit>) {
+        if (dataState is DataState.Error) updateErrorUI(dataState.exception)
+    }
+
+    fun startDetails() = mainNavigator.detailsFlow()
 }
