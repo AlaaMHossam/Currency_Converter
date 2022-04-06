@@ -9,6 +9,8 @@
 /.idea/assetWizardSettings.xml
 .DS_Store
 /build
+/features/conversions_details/build
+/features/currency_conversion/build
 /captures
 .externalNativeBuild
 .cxx
